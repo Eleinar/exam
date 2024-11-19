@@ -1,0 +1,495 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.4
+-- Dumped by pg_dump version 16.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: clients; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.clients (
+    id integer NOT NULL,
+    client_name character varying(100)
+);
+
+
+ALTER TABLE public.clients OWNER TO postgres;
+
+--
+-- Name: clients_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.clients_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.clients_id_seq OWNER TO postgres;
+
+--
+-- Name: clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.clients_id_seq OWNED BY public.clients.id;
+
+
+--
+-- Name: goods; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.goods (
+    id integer NOT NULL,
+    good_name character varying(50)
+);
+
+
+ALTER TABLE public.goods OWNER TO postgres;
+
+--
+-- Name: goods_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.goods_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.goods_id_seq OWNER TO postgres;
+
+--
+-- Name: goods_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.goods_id_seq OWNED BY public.goods.id;
+
+
+--
+-- Name: order_status_history; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.order_status_history (
+    id integer NOT NULL,
+    order_id integer,
+    old_status integer,
+    new_status integer,
+    change_date date
+);
+
+
+ALTER TABLE public.order_status_history OWNER TO postgres;
+
+--
+-- Name: order_status_history_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.order_status_history_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.order_status_history_id_seq OWNER TO postgres;
+
+--
+-- Name: order_status_history_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.order_status_history_id_seq OWNED BY public.order_status_history.id;
+
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.orders (
+    id integer NOT NULL,
+    id_client integer,
+    order_status integer,
+    order_date date
+);
+
+
+ALTER TABLE public.orders OWNER TO postgres;
+
+--
+-- Name: orders_goods; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.orders_goods (
+    id integer NOT NULL,
+    id_good integer,
+    id_order integer
+);
+
+
+ALTER TABLE public.orders_goods OWNER TO postgres;
+
+--
+-- Name: orders_goods_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.orders_goods_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.orders_goods_id_seq OWNER TO postgres;
+
+--
+-- Name: orders_goods_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.orders_goods_id_seq OWNED BY public.orders_goods.id;
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.orders_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.orders_id_seq OWNER TO postgres;
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.orders_id_seq OWNED BY public.orders.id;
+
+
+--
+-- Name: statuses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.statuses (
+    id integer NOT NULL,
+    status character varying(20)
+);
+
+
+ALTER TABLE public.statuses OWNER TO postgres;
+
+--
+-- Name: statuses_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.statuses_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.statuses_id_seq OWNER TO postgres;
+
+--
+-- Name: statuses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.statuses_id_seq OWNED BY public.statuses.id;
+
+
+--
+-- Name: clients id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clients ALTER COLUMN id SET DEFAULT nextval('public.clients_id_seq'::regclass);
+
+
+--
+-- Name: goods id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.goods ALTER COLUMN id SET DEFAULT nextval('public.goods_id_seq'::regclass);
+
+
+--
+-- Name: order_status_history id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_status_history ALTER COLUMN id SET DEFAULT nextval('public.order_status_history_id_seq'::regclass);
+
+
+--
+-- Name: orders id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.orders_id_seq'::regclass);
+
+
+--
+-- Name: orders_goods id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders_goods ALTER COLUMN id SET DEFAULT nextval('public.orders_goods_id_seq'::regclass);
+
+
+--
+-- Name: statuses id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.statuses ALTER COLUMN id SET DEFAULT nextval('public.statuses_id_seq'::regclass);
+
+
+--
+-- Data for Name: clients; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.clients (id, client_name) FROM stdin;
+1	Михаил Шадрин
+2	Михаил Шадрин2
+3	Жоман Ручков
+4	Jamal
+5	Альфред
+6	Антон
+\.
+
+
+--
+-- Data for Name: goods; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.goods (id, good_name) FROM stdin;
+1	Колёса
+2	Диски
+3	Болгарка
+4	Фен
+5	Клей
+6	Пакетик
+7	Газ
+8	Детей
+\.
+
+
+--
+-- Data for Name: order_status_history; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.order_status_history (id, order_id, old_status, new_status, change_date) FROM stdin;
+1	3	2	3	2024-11-19
+2	3	3	1	2024-11-19
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.orders (id, id_client, order_status, order_date) FROM stdin;
+2	5	1	2024-11-19
+3	6	1	2024-11-19
+\.
+
+
+--
+-- Data for Name: orders_goods; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.orders_goods (id, id_good, id_order) FROM stdin;
+1	1	2
+2	2	3
+\.
+
+
+--
+-- Data for Name: statuses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.statuses (id, status) FROM stdin;
+1	В обработке
+2	Отправлен
+3	Доставлен
+\.
+
+
+--
+-- Name: clients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.clients_id_seq', 6, true);
+
+
+--
+-- Name: goods_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.goods_id_seq', 8, true);
+
+
+--
+-- Name: order_status_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.order_status_history_id_seq', 2, true);
+
+
+--
+-- Name: orders_goods_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.orders_goods_id_seq', 2, true);
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.orders_id_seq', 3, true);
+
+
+--
+-- Name: statuses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.statuses_id_seq', 3, true);
+
+
+--
+-- Name: clients clients_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clients
+    ADD CONSTRAINT clients_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: goods goods_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.goods
+    ADD CONSTRAINT goods_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: order_status_history order_status_history_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_status_history
+    ADD CONSTRAINT order_status_history_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_goods orders_goods_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders_goods
+    ADD CONSTRAINT orders_goods_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: statuses statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.statuses
+    ADD CONSTRAINT statuses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: order_status_history order_status_history_new_status_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_status_history
+    ADD CONSTRAINT order_status_history_new_status_fkey FOREIGN KEY (new_status) REFERENCES public.statuses(id);
+
+
+--
+-- Name: order_status_history order_status_history_old_status_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_status_history
+    ADD CONSTRAINT order_status_history_old_status_fkey FOREIGN KEY (old_status) REFERENCES public.statuses(id);
+
+
+--
+-- Name: order_status_history order_status_history_order_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_status_history
+    ADD CONSTRAINT order_status_history_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(id);
+
+
+--
+-- Name: orders_goods orders_goods_id_good_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders_goods
+    ADD CONSTRAINT orders_goods_id_good_fkey FOREIGN KEY (id_good) REFERENCES public.goods(id);
+
+
+--
+-- Name: orders_goods orders_goods_id_order_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders_goods
+    ADD CONSTRAINT orders_goods_id_order_fkey FOREIGN KEY (id_order) REFERENCES public.orders(id);
+
+
+--
+-- Name: orders orders_id_client_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_id_client_fkey FOREIGN KEY (id_client) REFERENCES public.clients(id);
+
+
+--
+-- Name: orders orders_order_status_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_order_status_fkey FOREIGN KEY (order_status) REFERENCES public.statuses(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

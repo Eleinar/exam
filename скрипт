@@ -1,0 +1,35 @@
+create table statuses(
+	id serial primary key,
+	status varchar(20)
+);
+
+create table goods(
+	id serial primary key,
+	good_name varchar(50)
+);
+
+create table clients(
+	id serial primary key,
+	client_name varchar(100)
+);
+
+create table orders(
+	id serial primary key,
+	id_client int references clients(id),
+	order_status int references statuses(id),
+	order_date date
+);
+
+create table orders_goods(
+	id serial primary key,
+	id_good int references goods(id),
+	id_order int references orders(id)
+);
+
+create table order_status_history(
+	id serial primary key,
+	order_id int references orders(id),
+	old_status int references statuses(id),
+	new_status int references statuses(id),
+	change_date date
+);
